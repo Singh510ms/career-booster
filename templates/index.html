@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}Career Booster - Generate Portfolio Project Ideas{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Boost Your Career with Tailored Portfolio Projects</h1>
+    <p>Upload your resume and provide a job posting URL to get personalized project ideas that showcase your skills and impress potential employers.</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Get Started</h2>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="resume" class="form-label">Upload Your Resume (PDF)</label>
+                <input type="file" name="resume" id="resume" class="form-control" accept=".pdf" required>
+                <small class="form-text">We'll extract your skills and experience from your resume.</small>
+            </div>
+            <div class="form-group">
+                <label for="job_url" class="form-label">Job Posting URL</label>
+                <input type="url" name="job_url" id="job_url" class="form-control" placeholder="https://example.com/job-posting" required>
+                <small class="form-text">Provide the URL of the job posting you're interested in.</small>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Generate Project Ideas</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>How It Works</h2>
+    </div>
+    <div class="card-body">
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-label">Upload Resume & Job URL</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-label">Get Project Ideas</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-label">Select a Project</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-label">Get Implementation Roadmap</div>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-label">Generate Platform Prompts</div>
+            </div>
+        </div>
+        <p class="text-center">Our AI agents analyze your resume and the job posting to generate tailored project ideas that showcase your skills and align with the job requirements. You can then select a project to get a detailed roadmap and generate prompts for different platforms like v0.dev, Lovable, and Replit.</p>
+    </div>
+</div>
+{% endblock %} 

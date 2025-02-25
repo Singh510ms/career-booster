@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block title %}Career Booster - Results{% endblock %}
+
+{% block content %}
+<div class="results-page">
+    {% if job_analysis %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Job Analysis</h2>
+        </div>
+        <div class="card-body">
+            <div class="job-analysis">{{ job_analysis | safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="card">
+        <div class="card-header">
+            <h2>Project Ideas</h2>
+        </div>
+        <div class="card-body">
+            <div class="project-ideas">{{ project_ideas | safe }}</div>
+            
+            <div class="form-group mt-3">
+                <label for="selected-project" class="form-label">Select a Project</label>
+                <textarea id="selected-project" class="form-control" rows="5" placeholder="Copy and paste the project idea you want to create a roadmap for"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="timeframe" class="form-label">Select a Timeframe</label>
+                <select id="timeframe" class="form-control">
+                    <option value="1 week">1 week</option>
+                    <option value="2 weeks" selected>2 weeks</option>
+                    <option value="3 weeks">3 weeks</option>
+                    <option value="1 month">1 month</option>
+                </select>
+            </div>
+            
+            <div class="form-group text-center">
+                <button id="select-project-btn" class="btn btn-primary">Generate Roadmap</button>
+            </div>
+            
+            <div class="spinner-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            
+            <p class="status-message text-center"></p>
+        </div>
+    </div>
+    
+    <div class="roadmap-container" style="display: none;">
+        <div class="card">
+            <div class="card-header">
+                <h2>Project Roadmap</h2>
+            </div>
+            <div class="card-body">
+                <div class="roadmap">{{ roadmap | safe }}</div>
+                
+                <div class="form-group text-center mt-3">
+                    <button id="generate-prompts-btn" class="btn btn-success" style="display: none;">Generate Platform Prompts</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="prompts-container" style="display: none;">
+        <div class="card">
+            <div class="card-header">
+                <h2>Platform Prompts</h2>
+            </div>
+            <div class="card-body">
+                <div class="tabs">
+                    <div class="tab active" data-tab="v0-tab">v0.dev</div>
+                    <div class="tab" data-tab="lovable-tab">Lovable</div>
+                    <div class="tab" data-tab="replit-tab">Replit</div>
+                    <div class="tab" data-tab="generic-tab">Generic</div>
+                </div>
+                
+                <div id="v0-tab" class="tab-content active">
+                    <div class="prompt-container">
+                        <pre id="v0-prompt" class="project-ideas">{{ prompts.v0 | default('') }}</pre>
+                        <button id="copy-v0-btn" class="copy-btn" data-copy="{{ prompts.v0 | default('') }}">Copy</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('download_prompt', platform='v0') }}" class="btn btn-secondary">Download</a>
+                    </div>
+                </div>
+                
+                <div id="lovable-tab" class="tab-content">
+                    <div class="prompt-container">
+                        <pre id="lovable-prompt" class="project-ideas">{{ prompts.lovable | default('') }}</pre>
+                        <button id="copy-lovable-btn" class="copy-btn" data-copy="{{ prompts.lovable | default('') }}">Copy</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('download_prompt', platform='lovable') }}" class="btn btn-secondary">Download</a>
+                    </div>
+                </div>
+                
+                <div id="replit-tab" class="tab-content">
+                    <div class="prompt-container">
+                        <pre id="replit-prompt" class="project-ideas">{{ prompts.replit | default('') }}</pre>
+                        <button id="copy-replit-btn" class="copy-btn" data-copy="{{ prompts.replit | default('') }}">Copy</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('download_prompt', platform='replit') }}" class="btn btn-secondary">Download</a>
+                    </div>
+                </div>
+                
+                <div id="generic-tab" class="tab-content">
+                    <div class="prompt-container">
+                        <pre id="generic-prompt" class="project-ideas">{{ prompts.generic | default('') }}</pre>
+                        <button id="copy-generic-btn" class="copy-btn" data-copy="{{ prompts.generic | default('') }}">Copy</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('download_prompt', platform='generic') }}" class="btn btn-secondary">Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{{ url_for('clear_session') }}" class="btn btn-danger">Start Over</a>
+    </div>
+</div>
+{% endblock %} 

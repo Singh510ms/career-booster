@@ -1,0 +1,178 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard - Career Booster{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Your Dashboard</h1>
+        <p>Track your progress and manage your projects</p>
+        <div class="dashboard-actions">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-plus"></i> New Project
+            </a>
+        </div>
+    </div>
+    
+    <div class="dashboard-content">
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Project Ideas</h3>
+                    <p class="stat-value">12</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-map"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Roadmaps</h3>
+                    <p class="stat-value">8</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Completed</h3>
+                    <p class="stat-value">5</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>In Progress</h3>
+                    <p class="stat-value">3</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-sections">
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Recent Projects</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                
+                <div class="project-cards">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>Real-time Chat Application</h3>
+                            <span class="project-date">2 days ago</span>
+                        </div>
+                        <p class="project-description">A real-time chat application using Node.js, Socket.io, and React.</p>
+                        <div class="project-tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Socket.io</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="btn btn-sm btn-secondary">View Roadmap</a>
+                            <a href="#" class="btn btn-sm btn-primary">Continue</a>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>E-commerce Dashboard</h3>
+                            <span class="project-date">1 week ago</span>
+                        </div>
+                        <p class="project-description">An admin dashboard for e-commerce platforms with analytics and order management.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Redux</span>
+                            <span class="tag">Chart.js</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="btn btn-sm btn-secondary">View Roadmap</a>
+                            <a href="#" class="btn btn-sm btn-primary">Continue</a>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>Task Management API</h3>
+                            <span class="project-date">2 weeks ago</span>
+                        </div>
+                        <p class="project-description">A RESTful API for task management with authentication and authorization.</p>
+                        <div class="project-tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Express</span>
+                            <span class="tag">MongoDB</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="btn btn-sm btn-secondary">View Roadmap</a>
+                            <a href="#" class="btn btn-sm btn-primary">Continue</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Your Progress</h2>
+                </div>
+                
+                <div class="progress-cards">
+                    <div class="progress-card">
+                        <div class="progress-header">
+                            <h3>Real-time Chat Application</h3>
+                            <span class="progress-percentage">65%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="progress-details">
+                            <p>13 of 20 tasks completed</p>
+                            <p>Estimated completion: 3 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <div class="progress-header">
+                            <h3>E-commerce Dashboard</h3>
+                            <span class="progress-percentage">40%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%;"></div>
+                        </div>
+                        <div class="progress-details">
+                            <p>8 of 20 tasks completed</p>
+                            <p>Estimated completion: 1 week</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <div class="progress-header">
+                            <h3>Task Management API</h3>
+                            <span class="progress-percentage">90%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%;"></div>
+                        </div>
+                        <div class="progress-details">
+                            <p>18 of 20 tasks completed</p>
+                            <p>Estimated completion: 1 day</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %} 

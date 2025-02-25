@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block title %}Your Project Ideas - Career Booster{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs2015.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <div class="page-header">
+        <h1>Your Tailored Project Ideas</h1>
+        <p>Based on your resume and the job posting, here are project ideas to help you stand out to employers.</p>
+    </div>
+    
+    <div class="results-grid">
+        <div class="results-card project-ideas">
+            <div class="card-header">
+                <h2>Project Ideas</h2>
+                <div class="actions">
+                    <button class="btn btn-icon copy-btn" data-content="project-ideas"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+            <div class="card-content markdown-content" id="project-ideas">
+                {{ project_ideas|markdown }}
+            </div>
+        </div>
+        
+        <div class="results-card roadmap">
+            <div class="card-header">
+                <h2>Implementation Roadmap</h2>
+                <div class="actions">
+                    <button class="btn btn-icon copy-btn" data-content="roadmap"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+            <div class="card-content markdown-content" id="roadmap">
+                {{ roadmap|markdown }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="prompt-exports">
+        <h2>Export Prompts</h2>
+        <p>Use these prompts with your favorite AI tools to get started on your project.</p>
+        
+        <div class="export-buttons">
+            <a href="{{ url_for('download_prompt', platform='v0') }}" class="export-btn">
+                <i class="fas fa-download"></i>
+                <span>V0 (Plain Markdown)</span>
+            </a>
+            <a href="{{ url_for('download_prompt', platform='lovable') }}" class="export-btn">
+                <i class="fas fa-download"></i>
+                <span>Lovable</span>
+            </a>
+            <a href="{{ url_for('download_prompt', platform='replit') }}" class="export-btn">
+                <i class="fas fa-download"></i>
+                <span>Replit</span>
+            </a>
+            <a href="{{ url_for('download_prompt', platform='generic') }}" class="export-btn">
+                <i class="fas fa-download"></i>
+                <span>Generic</span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="action-buttons">
+        <a href="{{ url_for('clear_session') }}" class="btn btn-secondary">Start Over</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.2.4/marked.min.js"></script>
+<script src="{{ url_for('static', filename='js/results.js') }}"></script>
+<script>
+    // Copy content to clipboard
+    document.querySelectorAll('.copy-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const contentId = this.getAttribute('data-content');
+            const content = document.getElementById(contentId).textContent;
+            
+            navigator.clipboard.writeText(content).then(() => {
+                // Show success message
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            });
+        });
+    });
+    
+    // Highlight code blocks
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+{% endblock %} 

@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %}Processing - Career Booster{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/processing.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="processing-container">
+    <div class="processing-card">
+        <h1>Processing Your Request</h1>
+        <p>We're analyzing your resume and the job posting to generate tailored project ideas.</p>
+        
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="progress-step" id="step1">
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Analyzing Resume</h3>
+                        <p>Extracting your skills and experience</p>
+                    </div>
+                    <div class="step-status">
+                        <div class="spinner"></div>
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                
+                <div class="progress-step" id="step2">
+                    <div class="step-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Analyzing Job Posting</h3>
+                        <p>Identifying key requirements and skills</p>
+                    </div>
+                    <div class="step-status">
+                        <div class="spinner"></div>
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                
+                <div class="progress-step" id="step3">
+                    <div class="step-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Generating Project Ideas</h3>
+                        <p>Creating tailored project ideas and roadmap</p>
+                    </div>
+                    <div class="step-status">
+                        <div class="spinner"></div>
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="processingMessage" class="processing-message">
+            <p>This may take a minute or two. Please don't close this page.</p>
+        </div>
+        
+        <div id="processingActions" class="processing-actions" style="display: none;">
+            <a href="/results" class="btn btn-primary">View Results</a>
+            <button id="startOverBtn" class="btn btn-secondary">Start Over</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/processing.js') }}"></script>
+{% endblock %} 
