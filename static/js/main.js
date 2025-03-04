@@ -20,6 +20,11 @@ function initApp() {
     // Initialize project selection if we're on the results page
     if (document.querySelector('.results-page')) {
         initProjectSelection();
+        
+        // Initialize project cards if they exist
+        if (document.querySelector('.project-cards')) {
+            initProjectCards();
+        }
     }
 }
 
@@ -251,35 +256,51 @@ function initProjectSelection() {
                 // Update status message
                 statusMessage.textContent = 'Prompts generated successfully!';
                 
-                // Show prompts
+                // Show prompts container
                 const promptsContainer = document.querySelector('.prompts-container');
                 promptsContainer.style.display = 'block';
                 
-                // Update prompt content
-                Object.keys(data.prompts).forEach(platform => {
-                    const promptElement = document.querySelector(`#${platform}-prompt`);
-                    if (promptElement) {
-                        promptElement.textContent = data.prompts[platform];
-                        
-                        // Update copy button
-                        const copyBtn = document.querySelector(`#copy-${platform}-btn`);
-                        if (copyBtn) {
-                            copyBtn.setAttribute('data-copy', data.prompts[platform]);
-                        }
-                    }
-                });
+                // Update prompt content for each platform
+                updatePromptDisplay('v0-prompt', data.prompts.v0);
+                updatePromptDisplay('lovable-prompt', data.prompts.lovable);
+                updatePromptDisplay('replit-prompt', data.prompts.replit);
+                updatePromptDisplay('generic-prompt', data.prompts.generic);
                 
-                // Initialize tabs
-                initTabs();
-                
-                // Initialize copy buttons
-                initCopyButtons();
+                // Update copy buttons
+                updateCopyButtonsWithNewContent();
                 
                 // Hide spinner
                 spinner.style.display = 'none';
                 
                 // Scroll to prompts
                 promptsContainer.scrollIntoView({ behavior: 'smooth' });
+                
+                // If project cards exist, update prompts with selected project
+                const activeProjectCard = document.querySelector('.project-card.active');
+                if (activeProjectCard && typeof projectData !== 'undefined') {
+                    const projectIndex = parseInt(activeProjectCard.getAttribute('data-project-index'));
+                    const selectedProject = projectData[projectIndex];
+                    
+                    // Store the raw prompts in platformPrompts for future use
+                    if (typeof platformPrompts === 'undefined') {
+                        window.platformPrompts = {
+                            v0: data.prompts.v0 || '',
+                            lovable: data.prompts.lovable || '',
+                            replit: data.prompts.replit || '',
+                            generic: data.prompts.generic || ''
+                        };
+                    } else {
+                        platformPrompts.v0 = data.prompts.v0 || platformPrompts.v0 || '';
+                        platformPrompts.lovable = data.prompts.lovable || platformPrompts.lovable || '';
+                        platformPrompts.replit = data.prompts.replit || platformPrompts.replit || '';
+                        platformPrompts.generic = data.prompts.generic || platformPrompts.generic || '';
+                    }
+                    
+                    // Update prompts with selected project information
+                    setTimeout(() => {
+                        updatePlatformPrompts(selectedProject);
+                    }, 100);
+                }
             })
             .catch(error => {
                 showError('An error occurred while generating prompts. Please try again.');
@@ -289,6 +310,134 @@ function initProjectSelection() {
                 spinner.style.display = 'none';
             });
         });
+    }
+    
+    function updatePromptDisplay(elementId, content) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.textContent = content || '';
+        }
+    }
+    
+    function updateCopyButtonsWithNewContent() {
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(button => {
+            const targetId = button.id.replace('copy-', '').replace('-btn', '');
+            const targetElement = document.getElementById(`${targetId}-prompt`);
+            
+            if (targetElement) {
+                button.setAttribute('data-copy', targetElement.textContent);
+            }
+        });
+    }
+}
+
+function initProjectCards() {
+    const projectCards = document.querySelectorAll('.project-card');
+    const selectedProjectTitle = document.getElementById('selected-project-title');
+    const selectedProjectDescription = document.getElementById('selected-project-description');
+    const selectedProjectTechStack = document.getElementById('selected-project-tech-stack');
+    const selectedProjectUniqueValue = document.getElementById('selected-project-unique-value');
+    
+    // Select the first project by default
+    if (projectCards.length > 0 && typeof projectData !== 'undefined') {
+        selectProject(0, projectCards[0]);
+    }
+    
+    projectCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const projectIndex = parseInt(this.getAttribute('data-project-index'));
+            selectProject(projectIndex, this);
+        });
+    });
+    
+    function selectProject(index, cardElement) {
+        // Remove active class from all cards
+        projectCards.forEach(c => c.classList.remove('active'));
+        
+        // Add active class to selected card
+        cardElement.classList.add('active');
+        
+        // Update project details
+        const project = projectData[index];
+        selectedProjectTitle.textContent = project.title;
+        selectedProjectDescription.textContent = project.description;
+        selectedProjectTechStack.textContent = project.tech_stack || 'Not specified';
+        selectedProjectUniqueValue.textContent = project.unique_value || 'Not specified';
+        
+        // Update platform prompts
+        updatePlatformPrompts(project);
+    }
+    
+    function updatePlatformPrompts(project) {
+        // Generate prompts for each platform
+        const lovablePrompt = generateLovablePrompt(project);
+        const boltPrompt = generateBoltPrompt(project);
+        const replitPrompt = generateReplitPrompt(project);
+        
+        // Update prompt content
+        document.getElementById('lovable-prompt').textContent = lovablePrompt;
+        document.getElementById('bolt-prompt').textContent = boltPrompt;
+        document.getElementById('replit-prompt').textContent = replitPrompt;
+        
+        // Update copy buttons
+        updateCopyButton('copy-lovable-btn', lovablePrompt);
+        updateCopyButton('copy-bolt-btn', boltPrompt);
+        updateCopyButton('copy-replit-btn', replitPrompt);
+    }
+    
+    function generateLovablePrompt(project) {
+        return `Project Title: ${project.title}
+
+Description:
+${project.description}
+
+Tech Stack:
+${project.tech_stack || 'Not specified'}
+
+Unique Value:
+${project.unique_value || 'Not specified'}`;
+    }
+    
+    function generateBoltPrompt(project) {
+        return `Project Title: ${project.title}
+
+Project Overview:
+${project.description}
+
+Technology Stack:
+${project.tech_stack || 'Not specified'}
+
+Unique Features:
+${project.unique_value || 'Not specified'}`;
+    }
+    
+    function generateReplitPrompt(project) {
+        return `Project Name: ${project.title}
+
+Project Description:
+${project.description}
+
+Required Technologies:
+${project.tech_stack || 'Not specified'}
+
+Key Features:
+${project.unique_value || 'Not specified'}`;
+    }
+    
+    function updateCopyButton(buttonId, text) {
+        const button = document.getElementById(buttonId);
+        if (button) {
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 2000);
+                });
+            });
+        }
     }
 }
 

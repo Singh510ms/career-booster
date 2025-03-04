@@ -1,40 +1,66 @@
 # Career Booster - AI-Powered Portfolio Project Generator
 
-Career Booster helps job seekers generate impressive portfolio projects tailored to specific job descriptions, increasing their chances of landing interviews and job offers.
+A web application that uses CrewAI to generate tailored project ideas and platform-specific prompts based on your resume and job descriptions.
 
 ## Features
 
-- **Resume Analysis**: Analyzes your resume to identify your skills and experience
-- **Job Posting Analysis**: Extracts key requirements and skills from job postings
-- **Personalized Project Ideas**: Generates project ideas that showcase your existing skills and align with job requirements
-- **Detailed Roadmaps**: Provides step-by-step plans to build impressive projects in 1-2 weeks
-- **Multiple Export Options**: Generate prompts for different AI platforms
+- **Upload your resume**: We analyze your skills and experiences
+- **Provide a job posting URL**: We extract key requirements
+- **Get project ideas**: Tailored project suggestions that showcase your skills
+- **Get platform prompts**: Ready-to-use prompts for Lovable.dev, Bolt.new, and Replit
 
-## Technology Stack
+## Setup
 
-- **Backend**: Python, Flask, CrewAI
-- **Frontend**: HTML, CSS, JavaScript
-- **AI Integration**: OpenAI API
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/yourusername/career-booster.git
+   cd career-booster
+   ```
 
-## How to Run
+2. Set up a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Set up your .env file with API keys (see .env.example)
-4. Run the application: `python app.py`
-5. Open http://localhost:5000 in your browser
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Demo Flow
+4. Create a `.env` file in the root directory with your API key:
+   ```
+   CEREBRAS_API_KEY=your_cerebras_api_key_here
+   ```
 
-1. Upload a resume (PDF)
-2. Enter a job posting URL
-3. Click "Generate Project Ideas"
-4. View the generated project ideas and roadmap
-5. Export prompts for different AI platforms
+## Running the Application
 
-## Future Enhancements
+1. Run the Flask application:
+   ```bash
+   python app.py
+   ```
 
-- Integration with more job platforms
-- Additional project templates
-- Direct export to GitHub repositories
-- Community sharing of successful projects 
+2. Open your browser and navigate to:
+   ```
+   http://localhost:5000
+   ```
+
+3. Upload your resume (PDF) and provide a job posting URL.
+
+4. Wait for the CrewAI agents to analyze your information and generate results.
+
+5. View your tailored project ideas and platform prompts.
+
+## Architecture
+
+- **Frontend**: Flask web application with HTML, CSS, and JavaScript
+- **Backend**: CrewAI-powered agents for analyzing resumes and job postings
+- **Integration**: Seamless connection between the web interface and CrewAI
+
+## Technologies Used
+
+- Flask
+- CrewAI
+- Cerebras LLMs
+- JavaScript
+- HTML/CSS

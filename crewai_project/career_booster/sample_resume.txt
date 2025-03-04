@@ -1,0 +1,46 @@
+JOHN DOE
+Software Engineer
+john.doe@email.com | (123) 456-7890 | github.com/johndoe | linkedin.com/in/johndoe
+
+SUMMARY
+Experienced software engineer with 5 years of experience building web applications and APIs. Skilled in Python, JavaScript, React, and AWS. Passionate about creating clean, maintainable code and solving complex problems.
+
+SKILLS
+- Languages: Python, JavaScript, TypeScript, SQL, HTML, CSS
+- Frameworks/Libraries: React, Flask, Django, Node.js, Express
+- Tools/Platforms: AWS (EC2, S3, Lambda), Docker, Git, GitHub Actions, Redis, PostgreSQL, MongoDB
+- Methodologies: Agile, TDD, CI/CD, Microservices
+
+EXPERIENCE
+Senior Software Engineer | TechCorp Inc. | Jan 2021 - Present
+- Led a team of 4 engineers to develop a real-time analytics dashboard using React and D3.js
+- Designed and implemented a scalable API using Flask and AWS Lambda that processes 1M+ requests daily
+- Reduced API response time by 40% through performance optimizations and caching strategies
+- Implemented CI/CD pipeline using GitHub Actions, reducing deployment time from hours to minutes
+
+Software Engineer | DataSolutions LLC | Mar 2018 - Dec 2020
+- Developed a customer-facing web application using React and Redux that increased user engagement by 25%
+- Built RESTful APIs using Django and PostgreSQL to support mobile and web applications
+- Integrated third-party services (Stripe, AWS, Twilio) to enhance application functionality
+- Collaborated with UX designers to implement responsive and accessible UI components
+
+EDUCATION
+Bachelor of Science in Computer Science | State University | 2014 - 2018
+- GPA: 3.8/4.0
+- Relevant Coursework: Data Structures, Algorithms, Database Systems, Web Development, Machine Learning
+
+PROJECTS
+Personal Finance Tracker | github.com/johndoe/finance-tracker
+- Developed a full-stack application using React, Node.js, and MongoDB to track personal expenses
+- Implemented data visualization with Chart.js to display spending patterns and insights
+- Utilized JWT for authentication and Role-Based Access Control for authorization
+
+Weather Prediction API | github.com/johndoe/weather-api
+- Created a RESTful API using Flask and scikit-learn to predict weather patterns
+- Integrated with external weather data providers for real-time information
+- Deployed on AWS using Docker containers and managed with Kubernetes
+
+CERTIFICATIONS
+- AWS Certified Developer - Associate (2022)
+- MongoDB Certified Developer (2021)
+- Google Professional Cloud Developer (2020) 

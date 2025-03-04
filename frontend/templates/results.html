@@ -1,103 +1,93 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Career Booster</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .raw-data {
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 0.9em;
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="text-center mt-5 mb-4">
+            <h1>Career Booster</h1>
+            <p class="lead">Your Project Ideas & Prompts</p>
+        </header>
 
-{% block title %}Your Project Ideas - Career Booster{% endblock %}
-
-{% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs2015.min.css">
-{% endblock %}
-
-{% block content %}
-<div class="results-container">
-    <div class="page-header">
-        <h1>Your Tailored Project Ideas</h1>
-        <p>Based on your resume and the job posting, here are project ideas to help you stand out to employers.</p>
-    </div>
-    
-    <div class="results-grid">
-        <div class="results-card project-ideas">
-            <div class="card-header">
-                <h2>Project Ideas</h2>
-                <div class="actions">
-                    <button class="btn btn-icon copy-btn" data-content="project-ideas"><i class="fas fa-copy"></i></button>
+        <main>
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h2 class="card-title h4 mb-3">Project Ideas</h2>
+                    
+                    {% if results and results.project_ideas and results.project_ideas|length > 0 %}
+                        <div class="projects-container">
+                            {% for project in results.project_ideas %}
+                                <div class="project-card mb-4">
+                                    <h3 class="h5">{{ project.title if project.title and project.title is string else "Project Idea" }}</h3>
+                                    <div class="p-3 bg-light rounded mb-3">
+                                        <div class="markdown-content">
+                                            {% if project.description and project.description is string and project.description|trim %}
+                                                <p>{{ project.description }}</p>
+                                            {% endif %}
+                                            
+                                            {% if project.tech_stack and project.tech_stack is string and project.tech_stack|trim %}
+                                                <div class="tech-stack mb-2">
+                                                    <strong>Technology Stack:</strong> {{ project.tech_stack }}
+                                                </div>
+                                            {% endif %}
+                                            
+                                            {% if project.unique_value and project.unique_value is string and project.unique_value|trim %}
+                                                <div class="unique-value">
+                                                    <strong>Unique Value:</strong> {{ project.unique_value }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% elif results and results.raw_output and results.raw_output.project_ideas %}
+                        <div class="fallback-content">
+                            <div class="p-3 bg-light rounded mb-3">
+                                <div class="markdown-content">
+                                    <pre><code class="language-markdown">{{ results.raw_output.project_ideas }}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>No project ideas were generated. Please try again.</p>
+                    {% endif %}
                 </div>
             </div>
-            <div class="card-content markdown-content" id="project-ideas">
-                {{ project_ideas|markdown }}
-            </div>
-        </div>
-        
-        <div class="results-card roadmap">
-            <div class="card-header">
-                <h2>Implementation Roadmap</h2>
-                <div class="actions">
-                    <button class="btn btn-icon copy-btn" data-content="roadmap"><i class="fas fa-copy"></i></button>
-                </div>
-            </div>
-            <div class="card-content markdown-content" id="roadmap">
-                {{ roadmap|markdown }}
-            </div>
-        </div>
-    </div>
-    
-    <div class="prompt-exports">
-        <h2>Export Prompts</h2>
-        <p>Use these prompts with your favorite AI tools to get started on your project.</p>
-        
-        <div class="export-buttons">
-            <a href="{{ url_for('download_prompt', platform='v0') }}" class="export-btn">
-                <i class="fas fa-download"></i>
-                <span>V0 (Plain Markdown)</span>
-            </a>
-            <a href="{{ url_for('download_prompt', platform='lovable') }}" class="export-btn">
-                <i class="fas fa-download"></i>
-                <span>Lovable</span>
-            </a>
-            <a href="{{ url_for('download_prompt', platform='replit') }}" class="export-btn">
-                <i class="fas fa-download"></i>
-                <span>Replit</span>
-            </a>
-            <a href="{{ url_for('download_prompt', platform='generic') }}" class="export-btn">
-                <i class="fas fa-download"></i>
-                <span>Generic</span>
-            </a>
-        </div>
-    </div>
-    
-    <div class="action-buttons">
-        <a href="{{ url_for('clear_session') }}" class="btn btn-secondary">Start Over</a>
-    </div>
-</div>
-{% endblock %}
-
-{% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.2.4/marked.min.js"></script>
-<script src="{{ url_for('static', filename='js/results.js') }}"></script>
-<script>
-    // Copy content to clipboard
-    document.querySelectorAll('.copy-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const contentId = this.getAttribute('data-content');
-            const content = document.getElementById(contentId).textContent;
             
-            navigator.clipboard.writeText(content).then(() => {
-                // Show success message
-                const originalText = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-check"></i>';
-                
-                setTimeout(() => {
-                    this.innerHTML = originalText;
-                }, 2000);
-            });
-        });
-    });
-    
-    // Highlight code blocks
-    document.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelectorAll('pre code').forEach((block) => {
-            hljs.highlightBlock(block);
-        });
-    });
-</script>
-{% endblock %} 
+            <div class="text-center mb-5">
+                <form action="{{ url_for('clear') }}" method="post">
+                    <button type="submit" class="btn btn-primary">Start Over</button>
+                </form>
+            </div>
+        </main>
+
+        <footer class="text-center mt-5 mb-3">
+            <p class="text-muted small">Powered by CrewAI and Cerebras</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="{{ url_for('static', filename='js/results.js') }}"></script>
+</body>
+</html> 

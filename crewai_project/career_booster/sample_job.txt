@@ -1,0 +1,50 @@
+Senior Full Stack Developer
+
+Company: InnoTech Solutions
+Location: Remote (US-based)
+Job Type: Full-time
+
+About the Role:
+We are seeking an experienced Senior Full Stack Developer to join our growing engineering team. In this role, you will be responsible for designing, implementing, and maintaining complex web applications and services. You will work closely with product managers, designers, and other engineers to deliver high-quality software that meets our customers' needs.
+
+Responsibilities:
+- Design, develop, and maintain scalable and reliable web applications using React, Node.js, and PostgreSQL
+- Collaborate with cross-functional teams to define, design, and ship new features
+- Write clean, maintainable, and efficient code
+- Implement automated testing to ensure code quality and reliability
+- Optimize applications for maximum speed and scalability
+- Participate in code reviews and provide constructive feedback to other developers
+- Stay up-to-date with emerging trends and technologies in web development
+
+Requirements:
+- 5+ years of professional software development experience
+- Strong proficiency in JavaScript/TypeScript, HTML, and CSS
+- Experience with React.js and state management libraries (Redux, MobX, etc.)
+- Experience with server-side frameworks like Node.js/Express
+- Familiarity with database technologies (PostgreSQL, MongoDB)
+- Knowledge of RESTful APIs and modern authorization mechanisms
+- Understanding of fundamental design principles behind a scalable application
+- Experience with automated testing platforms and unit tests
+- Proficiency with Git and CI/CD pipelines
+- Excellent problem-solving and communication skills
+
+Nice to Have:
+- Experience with cloud platforms (AWS, GCP, Azure)
+- Knowledge of containerization technologies (Docker, Kubernetes)
+- Familiarity with GraphQL
+- Experience with microservices architecture
+- Understanding of serverless architectures
+- Contributions to open-source projects
+
+What We Offer:
+- Competitive salary and benefits package
+- Remote-first work environment with flexible hours
+- Professional development opportunities
+- Collaborative and inclusive company culture
+- Opportunity to work on challenging problems with high impact
+- Modern tech stack and tools
+
+We are an equal opportunity employer and value diversity at our company. We do not discriminate on the basis of race, religion, color, national origin, gender, sexual orientation, age, marital status, veteran status, or disability status.
+
+To Apply:
+Please submit your resume, cover letter, and a link to your GitHub profile or portfolio. 

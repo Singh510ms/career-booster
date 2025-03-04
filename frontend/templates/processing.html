@@ -1,75 +1,50 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing - Career Booster</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="text-center mt-5 mb-4">
+            <h1>Career Booster</h1>
+            <p class="lead">Generating your project ideas...</p>
+        </header>
 
-{% block title %}Processing - Career Booster{% endblock %}
-
-{% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/processing.css') }}">
-{% endblock %}
-
-{% block content %}
-<div class="processing-container">
-    <div class="processing-card">
-        <h1>Processing Your Request</h1>
-        <p>We're analyzing your resume and the job posting to generate tailored project ideas.</p>
-        
-        <div class="progress-container">
-            <div class="progress-steps">
-                <div class="progress-step" id="step1">
-                    <div class="step-icon">
-                        <i class="fas fa-file-alt"></i>
+        <main>
+            <div class="card shadow">
+                <div class="card-body text-center p-5">
+                    <div class="spinner-border text-primary mb-4" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
-                    <div class="step-content">
-                        <h3>Analyzing Resume</h3>
-                        <p>Extracting your skills and experience</p>
+                    
+                    <h2 class="h4 mb-3">Processing Your Request</h2>
+                    
+                    <p class="text-muted mb-4">This may take a few minutes as our AI analyzes your resume and the job description.</p>
+                    
+                    <div class="progress mb-4">
+                        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
                     </div>
-                    <div class="step-status">
-                        <div class="spinner"></div>
-                        <i class="fas fa-check"></i>
-                    </div>
-                </div>
-                
-                <div class="progress-step" id="step2">
-                    <div class="step-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="step-content">
-                        <h3>Analyzing Job Posting</h3>
-                        <p>Identifying key requirements and skills</p>
-                    </div>
-                    <div class="step-status">
-                        <div class="spinner"></div>
-                        <i class="fas fa-check"></i>
-                    </div>
-                </div>
-                
-                <div class="progress-step" id="step3">
-                    <div class="step-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div class="step-content">
-                        <h3>Generating Project Ideas</h3>
-                        <p>Creating tailored project ideas and roadmap</p>
-                    </div>
-                    <div class="step-status">
-                        <div class="spinner"></div>
-                        <i class="fas fa-check"></i>
+                    
+                    <p id="status-message" class="mb-2">Initializing agents...</p>
+                    
+                    <div id="error-container" class="alert alert-danger mt-4 d-none">
+                        <p id="error-message"></p>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-danger">Try Again</a>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div id="processingMessage" class="processing-message">
-            <p>This may take a minute or two. Please don't close this page.</p>
-        </div>
-        
-        <div id="processingActions" class="processing-actions" style="display: none;">
-            <a href="/results" class="btn btn-primary">View Results</a>
-            <button id="startOverBtn" class="btn btn-secondary">Start Over</button>
-        </div>
-    </div>
-</div>
-{% endblock %}
+        </main>
 
-{% block scripts %}
-<script src="{{ url_for('static', filename='js/processing.js') }}"></script>
-{% endblock %} 
+        <footer class="text-center mt-5 mb-3">
+            <p class="text-muted small">Powered by CrewAI and Cerebras</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/processing.js') }}"></script>
+</body>
+</html> 

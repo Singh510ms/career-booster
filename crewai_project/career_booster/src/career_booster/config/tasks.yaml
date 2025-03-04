@@ -1,0 +1,103 @@
+ideate_projects_task:
+  description: >
+    You are an expert career consultant. Given the job description and candidate's skills,
+    propose 2-3 project ideas that can be built in under 2 weeks. Each idea should:
+    1. Include a project overview (a one-liner describing what it is)
+    2. List key tech tools and skills used
+    3. Explain the unique selling point (why it would stand out)
+    
+    Make the projects directly relevant to the job requirements and ensure they showcase
+    the candidate's existing skills while demonstrating their ability to learn new ones.
+  agent: project_ideation_agent
+  expected_output: >
+    A list of 2-3 project ideas, each with a clear overview, key tech tools/skills, and unique selling point.
+    The ideas should be realistic to complete in 2 weeks and directly relevant to the job description.
+  context: >
+    Analyze the job description to identify key required skills and responsibilities. Then,
+    look at the candidate's existing skills to see where they align and where there might be gaps.
+    Your project ideas should help the candidate showcase their strengths while also demonstrating
+    their ability to learn and apply new skills relevant to the position.
+
+create_implementation_plan_task:
+  description: >
+    You are a Prompt Engineer helping users create portfolio projects. This is meant for 
+    job applicants to create portfolio projects so simple and easy to implement is the key. 
+    For each project idea, create three versions of the same project prompt, optimized for each platform.
+    
+    Your response MUST follow this exact format:
+
+    Lovable.dev Prompt
+    [Your Lovable.dev prompt here]
+    Focus on:
+    - UI/UX design aspects
+    - Visual components and user interactions
+    - Specific styling and design requirements
+
+    Bolt.new Prompt
+    [Your Bolt.new prompt here]
+    Focus on:
+    - Backend architecture and API design
+    - Data models and business logic
+    - Technical implementation details
+
+    Replit Prompt
+    [Your Replit prompt here]
+    Focus on:
+    - Full application functionality
+    - Code structure and organization
+    - Deployment and testing requirements
+
+    Each prompt version MUST:
+    1. Keep the core project idea intact
+    2. Be under 200 words but detailed
+    3. Reference similar projects on that platform
+    4. Adapt to each platform's strengths
+  agent: project_planner_agent
+  expected_output: >
+    A comprehensive implementation plan with three platform-specific sections. Each section MUST follow this exact structure:
+
+    === Lovable.dev Implementation ===
+    1. Project Overview (2-3 sentences)
+    2. Core Features (minimum 3 bullet points)
+    3. UI/UX Requirements:
+       - Color scheme and design system
+       - Key components and layouts
+       - Interactive elements and animations
+    4. Similar Project References (2-3 examples)
+    5. Implementation Tips specific to Lovable.dev
+
+    === Bolt.new Implementation ===
+    1. Project Overview (2-3 sentences)
+    2. Core Features (minimum 3 bullet points)
+    3. Technical Architecture:
+       - API endpoints and methods
+       - Data models and relationships
+       - Authentication/Authorization approach
+    4. Similar Project References (2-3 examples)
+    5. Implementation Tips specific to Bolt.new
+
+    === Replit Implementation ===
+    1. Project Overview (2-3 sentences)
+    2. Core Features (minimum 3 bullet points)
+    3. Full Stack Requirements:
+       - Frontend framework and structure
+       - Backend architecture and APIs
+       - Database design and schema
+    4. Similar Project References (2-3 examples)
+    5. Implementation Tips specific to Replit
+
+    Each implementation MUST:
+    - Maintain consistency with the core project idea
+    - Be detailed yet concise (200-300 words)
+    - Include platform-specific best practices
+    - Provide clear success criteria
+    - List required dependencies and tools
+  context: >
+    The same project can be built on any of these platforms, but each has its strengths:
+    - Lovable.dev excels at creating polished, user-friendly interfaces
+    - Bolt.new is powerful for building robust backend systems
+    - Replit is versatile for full-stack development
+    
+    Users should be able to choose their preferred platform and get a working
+    project that matches their portfolio needs. The prompts should be specific
+    enough to generate good results but allow for customization.

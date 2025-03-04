@@ -1,104 +1,131 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Tab functionality
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabPanes = document.querySelectorAll('.tab-pane');
+    // Initialize Prism.js syntax highlighting
+    if (typeof Prism !== 'undefined') {
+        Prism.highlightAll();
+    }
     
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons and panes
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabPanes.forEach(pane => pane.classList.remove('active'));
+    // Format any markdown content in the page
+    formatMarkdown();
+    
+    // Format markdown text in elements with the markdown-content class
+    function formatMarkdown() {
+        // Convert markdown-style lists to HTML lists
+        const markdownContents = document.querySelectorAll('.markdown-content p');
+        
+        markdownContents.forEach(content => {
+            const text = content.innerHTML;
             
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Show corresponding tab pane
-            const tabId = this.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
-        });
-    });
-    
-    // Prompt tab functionality
-    const promptTabButtons = document.querySelectorAll('.prompt-tab-button');
-    const promptTabPanes = document.querySelectorAll('.prompt-tab-pane');
-    
-    promptTabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons and panes
-            promptTabButtons.forEach(btn => btn.classList.remove('active'));
-            promptTabPanes.forEach(pane => pane.classList.remove('active'));
-            
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Show corresponding tab pane
-            const tabId = this.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
-        });
-    });
-    
-    // Copy to clipboard functionality
-    document.querySelectorAll('.copy-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const contentId = this.getAttribute('data-content');
-            const content = document.getElementById(contentId).textContent;
-            
-            navigator.clipboard.writeText(content)
-                .then(() => {
-                    // Show success message
-                    const originalText = this.innerHTML;
-                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                    
-                    // Reset button text after 2 seconds
-                    setTimeout(() => {
-                        this.innerHTML = originalText;
-                    }, 2000);
-                })
-                .catch(err => {
-                    console.error('Failed to copy text: ', err);
-                    alert('Failed to copy text. Please try again.');
-                });
-        });
-    });
-    
-    // Download functionality
-    document.querySelectorAll('.download-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const platform = this.getAttribute('data-platform');
-            window.location.href = `/download/${platform}`;
-        });
-    });
-    
-    // Start over button
-    document.getElementById('startOverBtn').addEventListener('click', function() {
-        window.location.href = '/clear_session';
-    });
-
-    // Apply syntax highlighting to code blocks
-    document.querySelectorAll('pre code').forEach((block) => {
-        hljs.highlightElement(block);
-    });
-
-    // Make table of contents if it exists
-    const toc = document.querySelector('.table-of-contents');
-    if (toc) {
-        const headings = document.querySelectorAll('.markdown-content h2, .markdown-content h3');
-        if (headings.length > 0) {
-            const tocList = document.createElement('ul');
-            headings.forEach((heading) => {
-                const id = heading.textContent.toLowerCase().replace(/\s+/g, '-');
-                heading.id = id;
+            // Process the content if it's not empty
+            if (text && text.trim()) {
+                // Format bullet lists
+                let formattedText = formatBulletLists(text);
                 
-                const listItem = document.createElement('li');
-                const link = document.createElement('a');
-                link.href = `#${id}`;
-                link.textContent = heading.textContent;
-                link.classList.add(heading.tagName.toLowerCase());
+                // Format numbered lists
+                formattedText = formatNumberedLists(formattedText);
                 
-                listItem.appendChild(link);
-                tocList.appendChild(listItem);
-            });
-            toc.appendChild(tocList);
+                // Format inline markdown
+                formattedText = formatInlineMarkdown(formattedText);
+                
+                // Update the content if it was changed
+                if (formattedText !== text) {
+                    content.innerHTML = formattedText;
+                }
+            }
+        });
+    }
+    
+    // Format bullet lists (*, -, +)
+    function formatBulletLists(text) {
+        if (!text.match(/^[\s]*[*\-+][\s]+/m)) {
+            return text;
         }
+        
+        // Split by newlines
+        let lines = text.split(/\n/);
+        let inList = false;
+        let formattedLines = [];
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            // Check if line starts with a bullet
+            if (line.match(/^[\s]*[*\-+][\s]+/)) {
+                // If not in a list, start one
+                if (!inList) {
+                    formattedLines.push('<ul>');
+                    inList = true;
+                }
+                // Add list item
+                formattedLines.push('<li>' + line.replace(/^[\s]*[*\-+][\s]+/, '') + '</li>');
+            } else {
+                // If in a list, end it
+                if (inList) {
+                    formattedLines.push('</ul>');
+                    inList = false;
+                }
+                formattedLines.push(line);
+            }
+        }
+        
+        // If still in a list at the end, close it
+        if (inList) {
+            formattedLines.push('</ul>');
+        }
+        
+        return formattedLines.join('\n');
+    }
+    
+    // Format numbered lists (1., 2., etc.)
+    function formatNumberedLists(text) {
+        if (!text.match(/^[\s]*\d+\.[\s]+/m)) {
+            return text;
+        }
+        
+        // Split by newlines
+        let lines = text.split(/\n/);
+        let inList = false;
+        let formattedLines = [];
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            // Check if line starts with a number
+            if (line.match(/^[\s]*\d+\.[\s]+/)) {
+                // If not in a list, start one
+                if (!inList) {
+                    formattedLines.push('<ol>');
+                    inList = true;
+                }
+                // Add list item
+                formattedLines.push('<li>' + line.replace(/^[\s]*\d+\.[\s]+/, '') + '</li>');
+            } else {
+                // If in a list, end it
+                if (inList) {
+                    formattedLines.push('</ol>');
+                    inList = false;
+                }
+                formattedLines.push(line);
+            }
+        }
+        
+        // If still in a list at the end, close it
+        if (inList) {
+            formattedLines.push('</ol>');
+        }
+        
+        return formattedLines.join('\n');
+    }
+    
+    // Format inline markdown (bold, italic, code)
+    function formatInlineMarkdown(text) {
+        return text
+            // Format bold text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            // Format italic text
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            // Format code blocks
+            .replace(/`(.*?)`/g, '<code>$1</code>')
+            // Format headers
+            .replace(/^#{3}\s+(.*)$/gm, '<h3>$1</h3>')
+            .replace(/^#{2}\s+(.*)$/gm, '<h2>$1</h2>')
+            .replace(/^#{1}\s+(.*)$/gm, '<h1>$1</h1>');
     }
 }); 
