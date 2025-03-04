@@ -13,7 +13,7 @@ A web application that uses CrewAI to generate tailored project ideas and platfo
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/career-booster.git
+   git clone https://github.com/Singh510ms/career-booster.git
    cd career-booster
    ```
 
