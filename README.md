@@ -1,3 +1,5 @@
+## This small side project still needs some work on the front end but meant as a proof of concept with CrewAI and Cerebras!
+
 # Career Booster - AI-Powered Portfolio Project Generator
 
 A web application that uses CrewAI to generate tailored project ideas and platform-specific prompts based on your resume and job descriptions.
